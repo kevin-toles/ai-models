@@ -1,0 +1,49 @@
+# =============================================================================
+# AI Models Repository - Git Ignore
+# =============================================================================
+
+# Model files (large binary files - download locally, don't commit)
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+*.mlmodel
+
+# Model directories content (keep structure, ignore files)
+models/*/*.gguf
+models/*/*.safetensors
+models/*/*.bin
+
+# Keep directory structure
+!models/.gitkeep
+!models/*/.gitkeep
+
+# Hugging Face cache
+.cache/
+huggingface/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+.venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Temp files
+*.tmp
+*.temp

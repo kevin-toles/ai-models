@@ -1,0 +1,129 @@
+# =============================================================================
+# AI Models Registry
+# =============================================================================
+# This file defines all available models and their metadata.
+# Actual model files are stored in ../models/ and are gitignored.
+# =============================================================================
+
+version: "1.0.0"
+
+models:
+  phi-4:
+    name: "Microsoft Phi-4"
+    description: "General reasoning, summarization, coding"
+    file: "phi-4-Q4_K_S.gguf"
+    size_gb: 8.4
+    context_length: 16384
+    quantization: "Q4_K_S"
+    source:
+      repo: "microsoft/phi-4-gguf"
+      filename: "phi-4-Q4_K_S.gguf"
+    roles:
+      - primary
+      - thinker
+      - coder
+    recommended_gpu_layers: -1  # All layers on GPU
+
+  deepseek-r1-7b:
+    name: "DeepSeek R1 Distill 7B"
+    description: "Chain-of-thought reasoning, complex analysis"
+    file: "DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf"
+    size_gb: 4.7
+    context_length: 32768
+    quantization: "Q4_K_M"
+    source:
+      repo: "unsloth/DeepSeek-R1-Distill-Qwen-7B-GGUF"
+      filename: "DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf"
+    roles:
+      - thinker
+    recommended_gpu_layers: -1
+
+  qwen2.5-7b:
+    name: "Qwen 2.5 7B Instruct"
+    description: "Code generation, technical tasks"
+    file: "qwen2.5-7b-instruct-q4_k_m.gguf"
+    size_gb: 4.5
+    context_length: 32768
+    quantization: "Q4_K_M"
+    source:
+      repo: "Qwen/Qwen2.5-7B-Instruct-GGUF"
+      filename: "qwen2.5-7b-instruct-q4_k_m.gguf"
+    roles:
+      - coder
+      - primary
+      - fast
+    recommended_gpu_layers: -1
+
+  llama-3.2-3b:
+    name: "Llama 3.2 3B Instruct"
+    description: "Fast responses, simple queries"
+    file: "llama-3.2-3b-instruct-q4_k_m.gguf"
+    size_gb: 2.0
+    context_length: 8192
+    quantization: "Q4_K_M"
+    source:
+      repo: "hugging-quants/Llama-3.2-3B-Instruct-Q4_K_M-GGUF"
+      filename: "llama-3.2-3b-instruct-q4_k_m.gguf"
+    roles:
+      - fast
+    recommended_gpu_layers: -1
+
+  phi-3-medium-128k:
+    name: "Phi-3 Medium 128K Instruct"
+    description: "Long context processing (128K), document analysis"
+    file: "Phi-3-medium-128k-instruct-Q4_K_M.gguf"
+    size_gb: 7.5
+    context_length: 131072
+    quantization: "Q4_K_M"
+    source:
+      repo: "microsoft/Phi-3-medium-128k-instruct-gguf"
+      filename: "Phi-3-medium-128k-instruct-Q4_K_M.gguf"
+    roles:
+      - longctx
+      - thinker
+    recommended_gpu_layers: -1
+
+# =============================================================================
+# Role Definitions
+# =============================================================================
+roles:
+  primary:
+    description: "Default/general purpose model"
+    task_types:
+      - general
+      - summarize
+      - explain
+      - chat
+
+  fast:
+    description: "Quick responses, simple tasks"
+    task_types:
+      - simple
+      - quick
+      - classify
+      - extract
+
+  coder:
+    description: "Code generation and review"
+    task_types:
+      - code
+      - debug
+      - review
+      - refactor
+      - test
+
+  thinker:
+    description: "Complex reasoning and analysis"
+    task_types:
+      - analyze
+      - reason
+      - compare
+      - debate
+      - plan
+
+  longctx:
+    description: "Long document processing"
+    task_types:
+      - document
+      - summarize_long
+      - rag
