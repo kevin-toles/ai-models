@@ -1,17 +1,16 @@
 # AI Models
 
-Model storage repository for the inference-service. Contains configuration files and download scripts - actual model files are gitignored.
+Model **storage repository** for the inference-service. Contains download scripts and actual model files (gitignored).
+
+> **⚠️ Configuration Ownership**: All model configuration (metadata, runtime settings, presets) is owned by **inference-service**. This repo is storage-only.
 
 ## Structure
 
 ```
 ai-models/
-├── config/
-│   ├── models.yaml      # Model registry (metadata, sources, roles)
-│   └── configs.yaml     # 33 configuration presets (S1-S5, D1-D10, T1-T10, Q1-Q5, P1-P3)
 ├── scripts/
-│   └── download_models.py
-└── models/              # GITIGNORED - actual .gguf files
+│   └── download_models.py   # HuggingFace download helper (self-contained)
+└── models/                  # GITIGNORED - actual .gguf files
     ├── phi-4/
     ├── deepseek-r1-7b/
     ├── qwen2.5-7b/
@@ -58,28 +57,20 @@ python scripts/download_models.py --all
 python scripts/download_models.py --models phi-4 llama-3.2-3b
 ```
 
-## Configuration Presets
+## Configuration
 
-### By Model Count
+All model configuration is managed by **inference-service**:
 
-| Category | Count | Example |
-|----------|-------|---------|
-| Single (S) | 5 | S1 = phi-4 only |
-| Dual (D) | 10 | D3 = phi-4 + deepseek debate |
-| Triple (T) | 10 | T1 = pipeline: llama→qwen→phi-4 |
-| Quad (Q) | 5 | Q1 = four-way ensemble |
-| Quint (P) | 3 | P1 = all five models |
+```bash
+# Point inference-service to this models directory
+export INFERENCE_MODELS_DIR=/path/to/ai-models/models
+export INFERENCE_CONFIG_DIR=/path/to/inference-service/config
+```
 
-### Mac 16GB Recommendations
-
-| RAM Pressure | Configs |
-|--------------|---------|
-| Light | S1, S2, S4, D5, D7 |
-| Medium | D1, D2, D4, D9, D10 |
-| Full | T1, T3, T5, T10 |
-
-See [configs.yaml](config/configs.yaml) for full details.
+See [inference-service/config/](https://github.com/kevin-toles/inference-service/tree/main/config) for:
+- `models.yaml` - Model metadata, runtime settings (gpu_layers, context_length, roles)
+- `presets.yaml` - 33 configuration presets (S1-S8, D1-D15, T1-T10, Q1-Q5, P1-P3)
 
 ## Related
 
-- [inference-service](https://github.com/kevin-toles/inference-service) - The service that uses these models
+- [inference-service](https://github.com/kevin-toles/inference-service) - Owns model configuration and runs inference
